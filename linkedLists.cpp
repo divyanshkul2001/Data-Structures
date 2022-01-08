@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//CREATE A NODE
 class node{
   
   public:
@@ -14,11 +15,12 @@ class node{
     }
 };
 
+//TO INSERT A NODE AT THE TAIL
 void insertAtTail(node* &head, int value){
     
     node* n = new node(value);
     
-    //case 1 - empty linked list
+    //CASE 1 - empty linked list
     
     if(head == NULL)
     {
@@ -26,7 +28,7 @@ void insertAtTail(node* &head, int value){
         return;
     }
     
-    //case 2 - to insert at tail when there is a linked list present
+    //CASE 2 - to insert at tail when there is a linked list present
     
     node* temp = head;
     
@@ -39,6 +41,7 @@ void insertAtTail(node* &head, int value){
     temp -> next = n;
 }
 
+//TO INSERT A NODE AT THE HEAD
 void insertAtHead(node* &head, int value){
     
     node* n = new node(value);
@@ -46,6 +49,7 @@ void insertAtHead(node* &head, int value){
     head = n;
 }
 
+//TO DELETE A NODE AT THE HEAD
 void deleteAtHead(node* &head){
     
     node* todelete = head;
@@ -53,19 +57,20 @@ void deleteAtHead(node* &head){
     delete todelete;
 }
 
+//TO DELETE A NODE OTHER THAN HEAD NODE
 void deletion(node* &head, int value){
     
-    //case 1 - when there is no linked list present
+    //CASE 1 - when there is no linked list present
     if(head == NULL){
         return;
     }
     
-    //case 2 - when there is only one node present
+    //CASE 2 - when there is only one node present
     if(head -> next == NULL){
         deleteAtHead(head);
     }
     
-    //case 3 - when there is a linked list present with multiple nodes
+    //CASE 3 - when there is a linked list present with multiple nodes
     node* temp = head;
     
     //loop until we reach the node before the deletion node(n-1th node)
@@ -79,6 +84,7 @@ void deletion(node* &head, int value){
     delete todelete;
 }
 
+//TO DISPLAY THE LINKED LIST
 void display(node* head){
     
     node* temp = head;
