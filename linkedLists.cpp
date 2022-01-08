@@ -102,6 +102,22 @@ node* reverse(node* head){
     return prevptr;
 }
 
+//REVERSE A LINKED LIST USING RECURSION
+node* reverseRecursive(node* head){
+    
+    //to check if there is no node or 1 node
+    if(head == NULL || head -> next == NULL)
+    {
+        return head;
+    }
+    
+    node* newhead = reverseRecursive(head -> next);
+    node* headNext = head -> next;
+    headNext -> next = head;
+    head -> next = NULL;
+    return newhead;
+}
+
 //TO DISPLAY THE LINKED LIST
 void display(node* head){
     
@@ -136,7 +152,8 @@ int main(){
     deleteAtHead(n);
     display(n);
   
-    node* reverseList = reverse(n);
+    //node* reverseList = reverse(n);
+    node* reverseList = reverseRecursive(n);
     display(reverseList);
     return 0;
 }
