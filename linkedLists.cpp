@@ -85,7 +85,7 @@ void deletion(node* &head, int value){
 }
 
 //TO REVERSE A LINKED LIST USING ITERATIVE METHOD
-node* reverse(node* head){
+node* reverse(node* &head){
     
     node* prevptr = NULL;
     node* currptr = head;
@@ -103,7 +103,7 @@ node* reverse(node* head){
 }
 
 //REVERSE A LINKED LIST USING RECURSION
-node* reverseRecursive(node* head){
+node* reverseRecursive(node* &head){
     
     //to check if there is no node or 1 node
     if(head == NULL || head -> next == NULL)
