@@ -84,6 +84,24 @@ void deletion(node* &head, int value){
     delete todelete;
 }
 
+//TO REVERSE A LINKED LIST USING ITERATIVE METHOD
+node* reverse(node* head){
+    
+    node* prevptr = NULL;
+    node* currptr = head;
+    node* nextptr;
+    
+    while(currptr != NULL){
+        nextptr = currptr -> next;      //to define the next pointer
+        currptr -> next = prevptr;       //to link current node to previous node
+        
+        prevptr = currptr;
+        currptr = nextptr;
+    }
+    
+    return prevptr;
+}
+
 //TO DISPLAY THE LINKED LIST
 void display(node* head){
     
@@ -117,5 +135,8 @@ int main(){
     deletion(n,6);
     deleteAtHead(n);
     display(n);
+  
+    node* reverseList = reverse(n);
+    display(reverseList);
     return 0;
 }
