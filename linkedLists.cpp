@@ -118,6 +118,32 @@ node* reverseRecursive(node* &head){
     return newhead;
 }
 
+//REVERSE K NODES IN A LINKED LIST
+node* reversek(node* &head, int k){
+    
+    node* prevptr = NULL;
+    node* currptr = head;
+    node* nextptr;
+    
+    //loop until k times and until currptr is NULL
+    int count=0;
+    while(currptr != NULL && count < k){
+        nextptr = currptr -> next;
+        currptr -> next = prevptr;
+        
+        prevptr = currptr;
+        currptr = nextptr;
+        
+        count++;
+    }
+    
+    //using recursion for the remaining nodes
+    if(nextptr != NULL){
+        head -> next = reversek(nextptr, k);
+    }
+    return prevptr;    
+}
+
 //TO DISPLAY THE LINKED LIST
 void display(node* head){
     
@@ -153,7 +179,8 @@ int main(){
     display(n);
   
     //node* reverseList = reverse(n);
-    node* reverseList = reverseRecursive(n);
+    //node* reverseList = reverseRecursive(n);
+    node* reverseList = reversek(n,2);
     display(reverseList);
     return 0;
 }
