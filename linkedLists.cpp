@@ -144,6 +144,96 @@ node* reversek(node* &head, int k){
     return prevptr;    
 }
 
+
+//TO DETECT AND REMOVE A CYCLE IN A LINKED LIST
+
+//TO CREATE A CYCLE IN A LINKED LIST
+void makeCycle(node* &head, int pos){
+    node* temp = head;
+    node* startNode;
+    
+    int count = 1;
+    while(temp->next!=NULL){
+        
+        if(count == pos)
+        {    
+            startNode = temp;
+            
+        }
+        
+        temp = temp -> next;
+        count++;
+    }
+    temp -> next = startNode;
+}
+
+/* FUNCTION TO REMOVE LOOP. */
+void removeLoop(node*, node*);
+
+/* THIS FUNCTION DETECTS A LOOP IN THE LIST
+IF LOOP IS THERE IT RETURNS 1 OTHERWISE RETURNS 0 */
+int detectAndRemoveLoop(node* list)
+{
+    node *slow_p = list, *fast_p = list;
+
+    // Iterate and find if loop exists or not
+    while (slow_p && fast_p && fast_p->next) {
+        slow_p = slow_p->next;
+        fast_p = fast_p->next->next;
+
+        /* If slow_p and fast_p meet at some point then there
+           is a loop */
+        if (slow_p == fast_p) {
+            removeLoop(slow_p, list);
+
+            /* Return 1 to indicate that loop is found */
+            return 1;
+        }
+    }
+
+    /* Return 0 to indicate that there is no loop*/
+    return 0;
+}
+
+/* FUNCTINO TO REMOVE LOOP.
+ loop_node --> Pointer to one of the loop nodes
+ head -->  Pointer to the start node of the linked list */
+void removeLoop(node* loop_node, node* head)
+{
+    node* ptr1 = loop_node;
+    node* ptr2 = loop_node;
+
+    // Count the number of nodes in loop
+    unsigned int k = 1, i;
+    while (ptr1->next != ptr2) {
+        ptr1 = ptr1->next;
+        k++;
+    }
+
+    // Fix one pointer to head
+    ptr1 = head;
+
+    // And the other pointer to k nodes after head
+    ptr2 = head;
+    for (i = 0; i < k; i++)
+        ptr2 = ptr2->next;
+
+    /*  Move both pointers at the same pace,
+      they will meet at loop starting node */
+    while (ptr2 != ptr1) {
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+
+    // Get pointer to the last node
+    while (ptr2->next != ptr1)
+        ptr2 = ptr2->next;
+
+    /* Set the next node of the loop ending node
+      to fix the loop */
+    ptr2->next = NULL;
+}
+
 //TO DISPLAY THE LINKED LIST
 void display(node* head){
     
@@ -158,7 +248,7 @@ void display(node* head){
 
 int main(){
     
-    /*node* head = NULL;
+   /*node* head = NULL;
     insertAtTail(head, 1);
     insertAtTail(head, 2);
     insertAtTail(head, 3);
@@ -168,19 +258,25 @@ int main(){
 
     insertAtTail(n,2);
     insertAtTail(n,3);
+    insertAtTail(n,4);
     insertAtTail(n,5);
     insertAtTail(n,6);
     display(n);
-    insertAtHead(n,4);
+    
+    /*insertAtHead(n,4);
     display(n);
     
     deletion(n,6);
-    deleteAtHead(n);
+    //deleteAtHead(n);
+    display(n);*/
+    
+    makeCycle(n,3);
+    //display(n);
+    
+    detectAndRemoveLoop(n);
+
+    cout << "Linked List after removing loop \n";
     display(n);
-  
-    //node* reverseList = reverse(n);
-    //node* reverseList = reverseRecursive(n);
-    node* reverseList = reversek(n,2);
-    display(reverseList);
+    
     return 0;
 }
