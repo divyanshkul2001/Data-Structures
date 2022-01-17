@@ -64,6 +64,111 @@ void display(node* &head){
     cout<<endl;
 }
 
+void deleteAtHead(node* &head){
+    node* todelete=head;
+    head=head->next;
+    head->prev=NULL;
+    
+    delete todelete;
+}
+
+void deletion(node* &head, int pos){
+    
+    if(pos==1){
+        deleteAtHead(head);
+        return;
+    }
+    node* temp=head;
+    int count=1;
+    while(temp!=NULL && count!=pos){
+        temp=temp->next;
+        count++;
+    }
+    
+    temp->prev->next=temp->next;
+    
+    if(temp->next!=NULL)
+        temp->next->prev=temp->prev;
+    
+    delete temp;
+}
+
+int length(node* &head){
+    int l=1;
+    node* temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+        l++;
+    }
+    return l;
+}
+
+node* appendLastk(node* &head, int k){
+   
+    int l=1;
+    node* temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+        l++;
+    }
+    if(k==l || k==0){
+        return head;
+    }
+    
+    node* tail=temp;
+    node* newTail;
+    node* newHead;
+    
+    int newtailptr=l-k;
+    int newheadptr=l-k+1;
+    
+    temp=head;
+    int count=1;
+    while(count!=newtailptr){
+        count++;
+        temp=temp->next;
+    }
+    newTail=temp;
+    
+    temp=head;
+    count=1;
+    while(count!=newheadptr){
+        count++;
+        temp=temp->next;
+    }
+    newHead=temp;
+    
+    newTail->next=NULL;
+    tail->next=head;
+    
+    return newHead;
+
+    /*
+    node* newHead;
+    node* newTail;
+    node* tail=head;
+    int l=length(head);
+    k=k%l;  //so that if k>l then also program runs
+    
+    int count=1;
+    while(tail->next!=NULL){
+        if(count==l-k){
+            newTail=tail;
+        }
+        if(count==l-k+1){
+            newHead=tail;
+        }
+        tail=tail->next;
+        count++;
+    }
+    
+    newTail->next=NULL;
+    tail->next=head;
+    
+    return newHead;
+    */
+}
+
 int main() {
     
     node* n=NULL;
@@ -73,6 +178,15 @@ int main() {
     insertAtTail(n,4);
     insertAtTail(n,5);
     insertAtTail(n,6);
+    insertAtHead(n,0);
     display(n);
+    deleteAtHead(n);
+    display(n);
+    deletion(n,3);
+    display(n);
+    
+    node* newHead=appendLastk(n,2);
+    cout<<"\n\nAfter appending last k nodes\n\n";
+    display(newHead);
     return 0;
 }
