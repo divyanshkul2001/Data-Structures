@@ -15,6 +15,18 @@ class node{
     }
 };
 
+//TO DISPLAY THE LINKED LIST
+void display(node* head){
+    
+    node* temp = head;
+    while(temp!=NULL)
+    {
+        cout<<temp -> data<<" -> ";
+        temp = temp -> next;
+    }
+    cout<<"NULL"<<endl;
+}
+
 //TO INSERT A NODE AT THE TAIL
 void insertAtTail(node* &head, int value){
     
@@ -269,17 +281,48 @@ node* mergeLL(node* &head1, node* &head2){
     return dummy->next;
 }
 
-//TO DISPLAY THE LINKED LIST
-void display(node* head){
-    
-    node* temp = head;
-    while(temp!=NULL)
-    {
-        cout<<temp -> data<<" -> ";
-        temp = temp -> next;
+//TO PUT EVEN NODES AFTER ODD NODES IN A LINKED LIST
+void arrangeEvenOdd(node* &head){
+    /* NOT WORKING
+    node* odd = head;
+    node* even = head->next;
+
+    while(odd->next!=NULL && odd->next->next!=NULL){
+        odd->next=odd->next->next;
+        odd=odd->next;
     }
-    cout<<"NULL"<<endl;
+
+    odd->next=even;
+
+    while(even->next!=NULL && even->next->next!=NULL){
+        even->next=even->next->next;
+        even=even->next;
+    }
+    even->next=NULL;
+
+    display(head);
+    */
+   
+    node* odd=head;
+    node* even=head->next;
+    node* evenStart=even;
+
+    while(odd->next!=NULL && even->next!=NULL){
+        odd->next=even->next;
+        odd=odd->next;
+        even->next=odd->next;
+        even=even->next;
+    }
+
+    odd->next=evenStart;
+    if(odd->next!=NULL){
+        even->next=NULL;
+    }
+
+    display(head);
 }
+
+
 
 int main(){
     
@@ -298,6 +341,8 @@ int main(){
     insertAtTail(n,6);
     display(n);
     
+    arrangeEvenOdd(n);
+
     /*insertAtHead(n,4);
     display(n);
     
@@ -305,13 +350,13 @@ int main(){
     //deleteAtHead(n);
     display(n);*/
     
-    makeCycle(n,3);
+    //makeCycle(n,3);
     //display(n);
     
-    detectAndRemoveLoop(n);
+    //detectAndRemoveLoop(n);
 
-    cout << "Linked List after removing loop \n";
-    display(n);
+    //cout << "Linked List after removing loop \n";
+    //display(n);
   
     /*insertAtTail(head1,1);
     insertAtTail(head1,4);
@@ -322,7 +367,6 @@ int main(){
     insertAtTail(head2,6);
     display(head1);
     display(head2);
-
     node* newHead = mergeLL(head1,head2);
     display(newHead);*/
     
