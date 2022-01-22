@@ -234,6 +234,41 @@ void removeLoop(node* loop_node, node* head)
     ptr2->next = NULL;
 }
 
+//TO MERGE 2 SORTED LINKED LISTS GIVEN INTO A NEW SORTED LINKED LIST
+node* mergeLL(node* &head1, node* &head2){
+    node* ptr1=head1;
+    node* ptr2=head2;
+    node* dummy = new node(-1);     //dummy node is not a pointer it is a node
+    node* ptr3=dummy;   
+
+    while(ptr1!=NULL && ptr2!=NULL){
+        if(ptr1->data < ptr2->data){
+            ptr3->next=ptr1;
+            ptr3=ptr3->next;
+            ptr1=ptr1->next;
+        }
+        else{
+            ptr3->next=ptr2;
+            ptr3=ptr3->next;
+            ptr2=ptr2->next;
+        }
+    }
+
+    while(ptr1!=NULL){
+        ptr3->next=ptr1;
+        ptr1=ptr1->next;
+        ptr3=ptr3->next;
+    }
+    
+    while(ptr2!=NULL){
+        ptr3->next=ptr2;
+        ptr2=ptr2->next;
+        ptr3=ptr3->next;
+    }
+    
+    return dummy->next;
+}
+
 //TO DISPLAY THE LINKED LIST
 void display(node* head){
     
@@ -277,6 +312,19 @@ int main(){
 
     cout << "Linked List after removing loop \n";
     display(n);
+  
+    /*insertAtTail(head1,1);
+    insertAtTail(head1,4);
+    insertAtTail(head1,5);
+    insertAtTail(head1,7);
+    insertAtTail(head2,2);
+    insertAtTail(head2,3);
+    insertAtTail(head2,6);
+    display(head1);
+    display(head2);
+
+    node* newHead = mergeLL(head1,head2);
+    display(newHead);*/
     
     return 0;
 }
